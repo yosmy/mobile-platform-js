@@ -1,13 +1,12 @@
 import * as ImagePicker from "expo-image-picker";
 import * as ImageManipulator from 'expo-image-manipulator';
-import permission from "./Permission";
 
 const image = {
     pick: () => {
         const pick = () => {
             return new Promise((resolve, reject) => {
                 ImagePicker.launchImageLibraryAsync({
-                    mediaTypes: 'Images',
+                    mediaTypes: ImagePicker.MediaTypeOptions.Images,
                     allowsEditing: true,
                     // aspect: [1, 1],
                     base64: true
@@ -36,12 +35,12 @@ const image = {
         };
 
         return new Promise((resolve, reject) => {
-            permission.get(permission.CAMERA_ROLL)
+            ImagePicker.getMediaLibraryPermissionsAsync()
                 .then(({status}) => {
                     // No permission?
                     if (status !== 'granted') {
                         // Need to ask for permissions
-                        permission.ask(permission.CAMERA_ROLL)
+                        ImagePicker.requestMediaLibraryPermissionsAsync()
                             .then(({status}) => {
                                 // User denied permissions
                                 if (status !== 'granted') {
@@ -101,12 +100,12 @@ const image = {
         };
 
         return new Promise((resolve, reject) => {
-            permission.get(permission.CAMERA, permission.CAMERA_ROLL)
+            ImagePicker.getCameraPermissionsAsync()
                 .then(({status}) => {
                     // No permission?
                     if (status !== 'granted') {
                         // Need to ask for permissions
-                        permission.ask(permission.CAMERA, permission.CAMERA_ROLL)
+                        ImagePicker.requestCameraPermissionsAsync()
                             .then(({status}) => {
                                 // User denied permissions
                                 if (status !== 'granted') {

@@ -29,7 +29,7 @@ var secure = {
         value = JSON.parse(value);
         resolve(value);
       })["catch"](function (e) {
-        SecureStore.deleteItemAsync(key);
+        SecureStore.deleteItemAsync(key).then(function () {})["catch"](function () {});
         reject(e);
       });
     });

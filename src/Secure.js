@@ -24,7 +24,9 @@ const secure = {
                     resolve(value);
                 })
                 .catch((e) => {
-                    SecureStore.deleteItemAsync(key);
+                    SecureStore.deleteItemAsync(key)
+                        .then(() => {})
+                        .catch(() => {});
 
                     reject(e);
                 });

@@ -5,8 +5,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 
-var _Amplitude = _interopRequireDefault(require("./Amplitude"));
-
 var _Application = _interopRequireDefault(require("./Application"));
 
 var _Back = require("./Back");
@@ -17,7 +15,7 @@ var _Cellular = _interopRequireDefault(require("./Cellular"));
 
 var _Clipboard = _interopRequireDefault(require("./Clipboard"));
 
-var _Contact = _interopRequireDefault(require("./Contact"));
+var _Contact = require("./Contact");
 
 var _Device = _interopRequireDefault(require("./Device"));
 
@@ -35,8 +33,6 @@ var _Network = _interopRequireDefault(require("./Network"));
 
 var _Notification = _interopRequireDefault(require("./Notification"));
 
-var _Permission = _interopRequireDefault(require("./Permission"));
-
 var _Review = _interopRequireDefault(require("./Review"));
 
 var _Scanner = _interopRequireDefault(require("./Scanner"));
@@ -49,12 +45,13 @@ var _Share = _interopRequireDefault(require("./Share"));
 
 var _Store = _interopRequireDefault(require("./Store"));
 
+var _Update = _interopRequireDefault(require("./Update"));
+
 var _Vibration = _interopRequireDefault(require("./Vibration"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 var _default = {
-  amplitude: _Amplitude["default"],
   application: _Application["default"],
   back: _Back.back,
   BackProps: _Back.Props,
@@ -62,7 +59,8 @@ var _default = {
   CacheProps: _Cache.Props,
   cellular: _Cellular["default"],
   clipboard: _Clipboard["default"],
-  contact: _Contact["default"],
+  contact: _Contact.contact,
+  ContactProps: _Contact.Props,
   device: _Device["default"],
   dimension: _Dimension.dimension,
   DimensionProps: _Dimension.Props,
@@ -72,13 +70,13 @@ var _default = {
   localization: _Localization["default"],
   network: _Network["default"],
   notification: _Notification["default"],
-  permission: _Permission["default"],
   review: _Review["default"],
   scanner: _Scanner["default"],
   secure: _Secure["default"],
   select: _Select["default"],
   share: _Share["default"],
   store: _Store["default"],
+  update: _Update["default"],
   vibration: _Vibration["default"]
 };
 exports["default"] = _default;

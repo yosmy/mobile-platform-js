@@ -18,7 +18,7 @@ var review = {
     return StoreReview.isAvailableAsync();
   },
   request: function request() {
-    StoreReview.requestReview();
+    return StoreReview.requestReview();
   }
 };
 var _default = review;

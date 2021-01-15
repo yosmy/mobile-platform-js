@@ -5,9 +5,13 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports["default"] = void 0;
+exports.Props = exports.contact = void 0;
 
 var Contacts = _interopRequireWildcard(require("expo-contacts"));
+
+var _propTypes = _interopRequireDefault(require("prop-types"));
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
 
@@ -20,16 +24,24 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 var contact = _objectSpread({
+  check: function check() {
+    return Contacts.getPermissionsAsync();
+  },
+  prepare: function prepare() {
+    return Contacts.requestPermissionsAsync();
+  },
   all: function all() {
-    var criteria = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
+    var fields = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : null;
 
-    if (!criteria) {
-      criteria = {
-        fields: [// https://github.com/expo/expo/blob/master/apps/native-component-list/src/screens/Contacts/ContactUtils.ts#L29
-        Contacts.Fields.Emails, Contacts.Fields.PhoneNumbers]
-      };
+    if (!fields) {
+      fields = [// https://github.com/expo/expo/blob/master/apps/native-component-list/src/screens/Contacts/ContactUtils.ts#L29
+      Contacts.Fields.Emails, Contacts.Fields.PhoneNumbers];
     }
 
+    var criteria = {
+      fields: fields,
+      sort: Contacts.SortTypes.FirstName
+    };
     return new Promise(function (resolve, reject) {
       Contacts.getContactsAsync(criteria).then(function (_ref) {
         var data = _ref.data;
@@ -39,5 +51,12 @@ var contact = _objectSpread({
   }
 }, Contacts.Fields);
 
-var _default = contact;
-exports["default"] = _default;
+exports.contact = contact;
+
+var Props = _propTypes["default"].shape({
+  check: _propTypes["default"].func.isRequired,
+  prepare: _propTypes["default"].func.isRequired,
+  all: _propTypes["default"].func.isRequired
+});
+
+exports.Props = Props;

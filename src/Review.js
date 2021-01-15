@@ -5,7 +5,7 @@ const review = {
         return StoreReview.isAvailableAsync();
     },
     request: () => {
-        StoreReview.requestReview();
+        return StoreReview.requestReview();
     }
 };
 

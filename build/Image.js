@@ -11,10 +11,6 @@ var ImagePicker = _interopRequireWildcard(require("expo-image-picker"));
 
 var ImageManipulator = _interopRequireWildcard(require("expo-image-manipulator"));
 
-var _Permission = _interopRequireDefault(require("./Permission"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
-
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
@@ -24,7 +20,7 @@ var image = {
     var pick = function pick() {
       return new Promise(function (resolve, reject) {
         ImagePicker.launchImageLibraryAsync({
-          mediaTypes: 'Images',
+          mediaTypes: ImagePicker.MediaTypeOptions.Images,
           allowsEditing: true,
           // aspect: [1, 1],
           base64: true
@@ -56,13 +52,13 @@ var image = {
     };
 
     return new Promise(function (resolve, reject) {
-      _Permission["default"].get(_Permission["default"].CAMERA_ROLL).then(function (_ref2) {
+      ImagePicker.getMediaLibraryPermissionsAsync().then(function (_ref2) {
         var status = _ref2.status;
 
         // No permission?
         if (status !== 'granted') {
           // Need to ask for permissions
-          _Permission["default"].ask(_Permission["default"].CAMERA_ROLL).then(function (_ref3) {
+          ImagePicker.requestMediaLibraryPermissionsAsync().then(function (_ref3) {
             var status = _ref3.status;
 
             // User denied permissions
@@ -75,7 +71,6 @@ var image = {
               resolve(image);
             })["catch"](reject);
           });
-
           return;
         }
 
@@ -120,13 +115,13 @@ var image = {
     };
 
     return new Promise(function (resolve, reject) {
-      _Permission["default"].get(_Permission["default"].CAMERA, _Permission["default"].CAMERA_ROLL).then(function (_ref5) {
+      ImagePicker.getCameraPermissionsAsync().then(function (_ref5) {
         var status = _ref5.status;
 
         // No permission?
         if (status !== 'granted') {
           // Need to ask for permissions
-          _Permission["default"].ask(_Permission["default"].CAMERA, _Permission["default"].CAMERA_ROLL).then(function (_ref6) {
+          ImagePicker.requestCameraPermissionsAsync().then(function (_ref6) {
             var status = _ref6.status;
 
             // User denied permissions
@@ -137,7 +132,6 @@ var image = {
 
             take().then(resolve)["catch"](reject);
           });
-
           return;
         }
 

@@ -7,34 +7,39 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 
-var Amplitude = _interopRequireWildcard(require("expo-analytics-amplitude"));
+var Updates = _interopRequireWildcard(require("expo-updates"));
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
-var amplitude = {
-  init: function init(api, debug) {
-    if (debug) {
-      return;
-    }
+var update = function update(ask) {
+  return new Promise(function (resolve, reject) {
+    // Check if there is an update
+    Updates.checkForUpdateAsync().then(function (_ref) {
+      var isAvailable = _ref.isAvailable;
 
-    Amplitude.initialize(api);
-  },
-  identify: function identify(user, debug) {
-    if (debug) {
-      return;
-    }
+      if (!isAvailable) {
+        resolve();
+        return;
+      } // Just download the new version to the cache
 
-    Amplitude.setUserId(user);
-  },
-  log: function log(name, properties, debug) {
-    if (debug) {
-      return;
-    }
 
-    Amplitude.logEventWithProperties(name, properties);
-  }
+      Updates.fetchUpdateAsync().then(function () {
+        ask().then(function (force) {
+          if (!force) {
+            resolve();
+            return;
+          }
+
+          Updates.reloadAsync().then(function () {
+            resolve();
+          })["catch"](reject);
+        })["catch"](reject);
+      })["catch"](reject);
+    })["catch"](reject);
+  });
 };
-var _default = amplitude;
+
+var _default = update;
 exports["default"] = _default;

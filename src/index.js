@@ -1,10 +1,9 @@
-import amplitude from './Amplitude';
 import application from './Application';
 import {back, Props as BackProps} from './Back';
 import {cache, Props as CacheProps} from './Cache';
 import cellular from './Cellular';
 import clipboard from './Clipboard';
-import contact from './Contact';
+import {contact, Props as ContactProps} from './Contact';
 import device from './Device';
 import {dimension, Props as DimensionProps} from './Dimension';
 import haptics from './Haptics';
@@ -13,23 +12,22 @@ import linking from './Linking';
 import localization from './Localization';
 import network from './Network';
 import notification from './Notification';
-import permission from './Permission';
 import review from './Review';
 import scanner from './Scanner';
 import secure from './Secure';
 import select from './Select';
 import share from './Share';
 import store from './Store';
+import update from './Update';
 import vibration from './Vibration';
 
 export default {
-    amplitude,
     application,
     back, BackProps,
     cache, CacheProps,
     cellular,
     clipboard,
-    contact,
+    contact, ContactProps,
     device,
     dimension: dimension, DimensionProps,
     haptics,
@@ -38,12 +36,12 @@ export default {
     localization,
     network,
     notification,
-    permission,
     review,
     scanner,
     secure,
     select,
     share,
     store,
+    update,
     vibration,
 }
