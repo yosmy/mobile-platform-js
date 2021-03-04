@@ -1,4 +1,3 @@
-import PropTypes from "prop-types";
 import {Dimensions} from "react-native";
 
 const dimension = {
@@ -44,11 +43,4 @@ const dimension = {
     }
 };
 
-const Props = PropTypes.shape({
-    get: PropTypes.func.isRequired,
-});
-
-export {
-    dimension,
-    Props
-};
+export default dimension;

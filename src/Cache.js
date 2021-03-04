@@ -1,136 +1,56 @@
-import PropTypes from "prop-types";
 import * as FileSystem from 'expo-file-system';
 import sha1 from 'crypto-js/sha1';
 
 const dir = `${FileSystem.cacheDirectory}cache`;
 
-const uri = (key) => {
+const uri = (key, dir) => {
     return `${dir}/${sha1(key)}`;
 };
 
-let memory;
-
 const cache = {
-    init: () => {
-        memory = {
-            table: [],
-            data: []
-        };
-
-        return FileSystem.makeDirectoryAsync(dir)
-    },
-    set: (key, value) => {
-        let found = memory.table.indexOf(key) !== -1;
-
-        if (found) {
-            memory.data = memory.data.map((item) => {
-                if (item.key === key) {
-                    // New item with new value
-                    return {
-                        key: item.key,
-                        value: value
-                    };
-                }
-
-                // Same item
-                return item
-            });
-        } else {
-            memory.table = memory.table.concat(key);
-
-            memory.data = memory.data.concat({
-                key: key,
-                value: value
-            });
+    init: async () => {
+        try {
+            await FileSystem.makeDirectoryAsync(dir);
+        } catch (e) {
         }
-
+    },
+    set: async (key, value) => {
         value = JSON.stringify(value);
 
-        return FileSystem.writeAsStringAsync(
-            uri(key),
+        await FileSystem.writeAsStringAsync(
+            uri(key, dir),
             value
-        )
+        );
     },
-    get: (key) => {
-        let found = memory.table.indexOf(key) !== -1;
+    get: async (key) => {
+        try {
+            let value = await FileSystem.readAsStringAsync(
+                uri(key, dir)
+            );
 
-        if (found) {
-            return new Promise((resolve) => {
-                const {value} = memory.data.find((item) => {
-                    return item.key === key;
-                });
+            value = JSON.parse(value);
 
-                resolve(value);
-            });
+            return value;
+        } catch (e) {
+            return undefined;
         }
-
-        return new Promise((resolve) => {
-            FileSystem.readAsStringAsync(
-                uri(key)
-            )
-                .then((value) => {
-                    value = JSON.parse(value);
-
-                    memory.table.push(key);
-
-                    memory.data.push({
-                        key: key,
-                        value: value
-                    });
-
-                    resolve(value);
-                })
-                .catch(() => {
-                    resolve(undefined);
-                })
-        })
     },
-    delete: (key) => {
-        memory = {
-            table: memory.table.filter((item) => {
-                return item !== key;
-            }),
-            data: memory.data.filter((item) => {
-                return item.key !== key;
-            })
-        };
-
-        return new Promise((resolve, reject) => {
-            FileSystem.deleteAsync(
-                uri(key)
-            )
-                .then(resolve)
-                .catch((e) => {
-                    console.log('Error deleting cache with key: ', key);
-
-                    reject(e);
-                })
-        });
+    delete: async (key) => {
+        try {
+            await FileSystem.deleteAsync(
+                uri(key, dir)
+            );
+        } catch (e) {
+        }
     },
-    purge: () => {
-        memory = null;
-
-        return FileSystem.deleteAsync(dir)
+    purge: async () => {
+        await FileSystem.deleteAsync(dir);
     },
-    count: () => {
-        return memory.table.length;
+    count: async () => {
+        const files = await FileSystem.readDirectoryAsync(dir);
 
-        // return new Promise((resolve, reject) => {
-        //     return FileSystem.readDirectoryAsync(dir)
-        //         .then((files) => {
-        //             resolve(files.length);
-        //         })
-        //         .catch(reject)
-        // });
-    },
+        return files.length;
+    }
 }
 
-const Props = PropTypes.shape({
-    set: PropTypes.func.isRequired,
-    get: PropTypes.func.isRequired,
-});
-
-export {
-    cache,
-    Props
-};
+export default cache;

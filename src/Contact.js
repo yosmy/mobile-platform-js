@@ -1,5 +1,4 @@
 import * as Contacts from 'expo-contacts';
-import PropTypes from "prop-types";
 
 const contact = {
     check: () => {
@@ -34,13 +33,4 @@ const contact = {
     ...Contacts.Fields
 };
 
-const Props = PropTypes.shape({
-    check: PropTypes.func.isRequired,
-    prepare: PropTypes.func.isRequired,
-    all: PropTypes.func.isRequired,
-});
-
-export {
-    contact,
-    Props
-};
+export default contact;

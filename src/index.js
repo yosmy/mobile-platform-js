@@ -1,11 +1,11 @@
 import application from './Application';
-import {back, Props as BackProps} from './Back';
-import {cache, Props as CacheProps} from './Cache';
+import back from './Back';
+import cache from './Cache';
 import cellular from './Cellular';
 import clipboard from './Clipboard';
-import {contact, Props as ContactProps} from './Contact';
+import contact from './Contact';
 import device from './Device';
-import {dimension, Props as DimensionProps} from './Dimension';
+import dimension from './Dimension';
 import haptics from './Haptics';
 import image from './Image';
 import linking from './Linking';
@@ -23,18 +23,18 @@ import vibration from './Vibration';
 
 export default {
     application,
-    back, BackProps,
-    cache, CacheProps,
     cellular,
-    clipboard,
-    contact, ContactProps,
     device,
-    dimension: dimension, DimensionProps,
+    network,
+    back,
+    cache,
+    clipboard,
+    contact,
+    dimension: dimension,
     haptics,
     image,
     linking,
     localization,
-    network,
     notification,
     review,
     scanner,

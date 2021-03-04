@@ -3,7 +3,7 @@ import * as Device from 'expo-device';
 
 const device = {
     expo: Constants.appOwnership === 'expo',
-    installation: Constants.installationId,
+    // installation: Constants.installationId,
     experience: Constants.manifest.id,
     package: () => {
         return Platform.OS === 'android'
@@ -112,7 +112,7 @@ const device = {
                         })
                 }),
                 new Promise((resolve) => {
-                    resolve(Constants.installationId);
+                    // resolve(Constants.installationId);
                 }),
             ])
                 .then((result) => {
@@ -139,7 +139,7 @@ const device = {
                         maxMemory: result[19],
                         isRooted: result[20],
                         isSideLoadingEnabled: result[21],
-                        installationId: result[22],
+                        // installationId: result[22],
                     });
                 });
         });

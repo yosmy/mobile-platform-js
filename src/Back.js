@@ -1,4 +1,3 @@
-import PropTypes from "prop-types";
 import {BackHandler} from "react-native";
 
 const back = {
@@ -10,12 +9,4 @@ const back = {
     }
 };
 
-const Props = PropTypes.shape({
-    add: PropTypes.func.isRequired,
-    remove: PropTypes.func.isRequired,
-});
-
-export {
-    back,
-    Props
-};
+export default back;

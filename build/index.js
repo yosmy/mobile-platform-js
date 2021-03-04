@@ -7,19 +7,19 @@ exports["default"] = void 0;
 
 var _Application = _interopRequireDefault(require("./Application"));
 
-var _Back = require("./Back");
+var _Back = _interopRequireDefault(require("./Back"));
 
-var _Cache = require("./Cache");
+var _Cache = _interopRequireDefault(require("./Cache"));
 
 var _Cellular = _interopRequireDefault(require("./Cellular"));
 
 var _Clipboard = _interopRequireDefault(require("./Clipboard"));
 
-var _Contact = require("./Contact");
+var _Contact = _interopRequireDefault(require("./Contact"));
 
 var _Device = _interopRequireDefault(require("./Device"));
 
-var _Dimension = require("./Dimension");
+var _Dimension = _interopRequireDefault(require("./Dimension"));
 
 var _Haptics = _interopRequireDefault(require("./Haptics"));
 
@@ -53,22 +53,18 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "d
 
 var _default = {
   application: _Application["default"],
-  back: _Back.back,
-  BackProps: _Back.Props,
-  cache: _Cache.cache,
-  CacheProps: _Cache.Props,
   cellular: _Cellular["default"],
-  clipboard: _Clipboard["default"],
-  contact: _Contact.contact,
-  ContactProps: _Contact.Props,
   device: _Device["default"],
-  dimension: _Dimension.dimension,
-  DimensionProps: _Dimension.Props,
+  network: _Network["default"],
+  back: _Back["default"],
+  cache: _Cache["default"],
+  clipboard: _Clipboard["default"],
+  contact: _Contact["default"],
+  dimension: _Dimension["default"],
   haptics: _Haptics["default"],
   image: _Image["default"],
   linking: _Linking["default"],
   localization: _Localization["default"],
-  network: _Network["default"],
   notification: _Notification["default"],
   review: _Review["default"],
   scanner: _Scanner["default"],

@@ -11,15 +11,15 @@ var _expoConstants = _interopRequireDefault(require("expo-constants"));
 
 var Device = _interopRequireWildcard(require("expo-device"));
 
-function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
+function _getRequireWildcardCache(nodeInterop) { if (typeof WeakMap !== "function") return null; var cacheBabelInterop = new WeakMap(); var cacheNodeInterop = new WeakMap(); return (_getRequireWildcardCache = function _getRequireWildcardCache(nodeInterop) { return nodeInterop ? cacheNodeInterop : cacheBabelInterop; })(nodeInterop); }
 
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
+function _interopRequireWildcard(obj, nodeInterop) { if (!nodeInterop && obj && obj.__esModule) { return obj; } if (obj === null || _typeof(obj) !== "object" && typeof obj !== "function") { return { "default": obj }; } var cache = _getRequireWildcardCache(nodeInterop); if (cache && cache.has(obj)) { return cache.get(obj); } var newObj = {}; var hasPropertyDescriptor = Object.defineProperty && Object.getOwnPropertyDescriptor; for (var key in obj) { if (key !== "default" && Object.prototype.hasOwnProperty.call(obj, key)) { var desc = hasPropertyDescriptor ? Object.getOwnPropertyDescriptor(obj, key) : null; if (desc && (desc.get || desc.set)) { Object.defineProperty(newObj, key, desc); } else { newObj[key] = obj[key]; } } } newObj["default"] = obj; if (cache) { cache.set(obj, newObj); } return newObj; }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 var device = {
   expo: _expoConstants["default"].appOwnership === 'expo',
-  installation: _expoConstants["default"].installationId,
+  // installation: Constants.installationId,
   experience: _expoConstants["default"].manifest.id,
   "package": function _package() {
     return Platform.OS === 'android' ? _expoConstants["default"].manifest.android["package"] : _expoConstants["default"].manifest.ios.bundleIdentifier;
@@ -90,8 +90,7 @@ var device = {
         Device.isSideLoadingEnabledAsync().then(resolve)["catch"](function () {
           resolve(null);
         });
-      }), new Promise(function (resolve) {
-        resolve(_expoConstants["default"].installationId);
+      }), new Promise(function (resolve) {// resolve(Constants.installationId);
       })]).then(function (result) {
         resolve({
           isDevice: result[0],
@@ -115,8 +114,8 @@ var device = {
           uptime: result[18],
           maxMemory: result[19],
           isRooted: result[20],
-          isSideLoadingEnabled: result[21],
-          installationId: result[22]
+          isSideLoadingEnabled: result[21] // installationId: result[22],
+
         });
       });
     });
