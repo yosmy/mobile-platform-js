@@ -9,28 +9,20 @@ const secure = {
             value
         );
     },
-    get: (key) => {
-        return new Promise((resolve, reject) => {
-            SecureStore.getItemAsync(key)
-                .then((value) => {
-                    if (value === null) {
-                        resolve(undefined);
+    get: async (key) => {
+        try {
+            const value = await SecureStore.getItemAsync(key);
 
-                        return;
-                    }
+            if (value === null) {
+                return undefined;
+            }
 
-                    value = JSON.parse(value);
+            return JSON.parse(value);
+        } catch (e) {
+            await SecureStore.deleteItemAsync(key);
 
-                    resolve(value);
-                })
-                .catch((e) => {
-                    SecureStore.deleteItemAsync(key)
-                        .then(() => {})
-                        .catch(() => {});
-
-                    reject(e);
-                });
-        })
+            throw e;
+        }
     },
     delete: (key) => {
         return SecureStore.deleteItemAsync(key);

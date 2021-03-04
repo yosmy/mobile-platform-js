@@ -5,13 +5,9 @@ function _typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "functi
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.Props = exports.contact = void 0;
+exports["default"] = void 0;
 
 var Contacts = _interopRequireWildcard(require("expo-contacts"));
-
-var _propTypes = _interopRequireDefault(require("prop-types"));
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
 
@@ -51,12 +47,5 @@ var contact = _objectSpread({
   }
 }, Contacts.Fields);
 
-exports.contact = contact;
-
-var Props = _propTypes["default"].shape({
-  check: _propTypes["default"].func.isRequired,
-  prepare: _propTypes["default"].func.isRequired,
-  all: _propTypes["default"].func.isRequired
-});
-
-exports.Props = Props;
+var _default = contact;
+exports["default"] = _default;
